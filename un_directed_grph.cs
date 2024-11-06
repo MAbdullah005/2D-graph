@@ -70,6 +70,37 @@ namespace weightGraph_dsa
                 Console.WriteLine();
             }
         }
+	        {
+       Dictionary<Node,Node> previos = new Dictionary<Node,Node>();
+       Dictionary<Node,int> distance= new Dictionary<Node,int>();
+        HashSet<Node> set = new HashSet<Node>();
+       PriorityQueue<Node,int> quee=new PriorityQueue<Node,int>();
+        quee.Enqueue(_nodes[data],0);
+        while(quee.Count > 0)
+        {
+            Node node = quee.Dequeue();
+            foreach(var item in  node.getedges())
+            {
+               if(quee.UnorderedItems.Any(i=>i.Element==node))
+                {
+
+                    
+            }
+        }
+    }
+   private bool balance(Dictionary<Node, Node> previos,Dictionary<Node, int> distance,Node from,Node to,int wight)
+    {
+         if(!distance.ContainsKey(from))
+        {
+            distance.Add(from,wight);
+            previos.Add(to,from);
+        }   
+         else if (distance[from]>wight)
+        {
+            distance[from] = wight;
+        }
+    }
+}
     }
         public class Progarm
         {
