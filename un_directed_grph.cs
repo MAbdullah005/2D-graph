@@ -10,10 +10,18 @@ namespace weightGraph_dsa
         private class Node
         {
            public string lable;
-            private List<Edges> edges=new List<Edges>();
+            public List<Edges> edges=new List<Edges>();
             public Node(string lable)
             {
                 this.lable = lable;
+            }
+            public void addedge(Node to,int wight)
+            {
+                edges.Add(new Edges(this,to,wight)); 
+            }
+            public List<Edges> getedges()
+            {
+                return edges;
             }
             public override string ToString()
             {
@@ -36,31 +44,28 @@ namespace weightGraph_dsa
             }
         }
         Dictionary<string,Node> _nodes = new Dictionary<string,Node>();
-        Dictionary<Node,List<Edges>> adjenceylsit= new Dictionary<Node,List<Edges>>();
         public void addnode(string data)
         {
-            Node node = new Node(data);
-            _nodes.TryAdd(data, node);
-            adjenceylsit.TryAdd(node, new List<Edges>());
+            _nodes.TryAdd(data, new Node(data));
         }
         public void addedge(string from,string to,int wight)
         {
             var from1 = _nodes[from]; 
             var to1 = _nodes[to];
             if (from1 == null || to1 == null) return;
-            adjenceylsit[from1].Add(new Edges(from1, to1, wight));
-            adjenceylsit[to1].Add(new Edges(to1, from1, wight));
+            from1.addedge(to1, wight);
+            to1.addedge(from1, wight);
         }
         public void print()
         {
-            foreach (var source in adjenceylsit.Keys)
+            foreach (var node in _nodes.Values)
             {
-                var target = adjenceylsit[source];
+                var target = node.getedges();
                 if(target == null) continue;
-				Console.Write(source + "connected to ");
-				foreach (var node in target)
+				Console.Write(node + "connected to ");
+				foreach (var nigbous in target)
                 {
-                    Console.Write(node);
+                    Console.Write(nigbous);
                 }
                 Console.WriteLine();
             }
